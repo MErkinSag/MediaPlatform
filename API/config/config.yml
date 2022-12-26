@@ -1,0 +1,11 @@
+db:
+  pg:
+    dns_name: postgres
+    contents:
+      database: mediadb
+      username: postgres
+      password: mediapwd123
+      tables:
+        video: videos
+        movie: movies
+        game: games

@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  backend_api:
+    build: ./API/.
+
+    expose: 
+      - '8000'
+
+    networks:
+      - ui
+      - postgres
+
+    environment:
+      - FILL_DB=True
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  ui:
+    build: ./UI/.
+
+    ports:
+      - "80:8501"
+
+    networks:
+      - ui
+
+    depends_on:
+      - "backend_api"
+
+  postgres:
+      image: postgres:15.1-alpine
+      volumes:
+        - postgres_data:/var/lib/postgresql/data/
+      ports:
+        - '5432:5432'
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=mediapwd123
+        - POSTGRES_DB=mediadb
+
+      healthcheck:
+          test: ["CMD-SHELL", "pg_isready -U postgres"]
+          interval: 5s
+          timeout: 5s
+          retries: 5
+
+      networks:
+        - postgres
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=media-admin@mail.com
+      - PGADMIN_DEFAULT_PASSWORD=12345
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - postgres
+    ports:
+      - '8080:80'
+    depends_on:
+      - postgres
+    
+networks:
+  postgres:
+    driver: bridge
+  ui:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  pgadmin_data:
