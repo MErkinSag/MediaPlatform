@@ -7,7 +7,9 @@ docker compose up
 ```
 which will build the images and run all of the services. The application runs on http://localhost. (if port 80 is busy can be set on docker-compose.yml ui service)
 
---> The environment variable "FILL_DB" in docker-compose.yml file is for creating the tables and filling them with dummy data. Simply comment out it while running it but the first time. 
+Currently there is no login page. A prompt asks for a password which is "123" for one user.
+
+--> The environment variable "FILL_DB" of backend_api service in docker-compose.yml file is for creating the tables and filling them with dummy data. Simply comment it out after running the application for the first time.
 
 Services include:
 
