@@ -147,9 +147,7 @@ async def remove_game(game_content: GameContent):
 @app.on_event("startup")
 async def startup():
     await media_db.connect()
-    if os.environ.get("FILL_DB") == "True":
-        from db.dummy.fill_db import fill_db_with_dummy_data
-        await fill_db_with_dummy_data(config)
+
 
 @app.on_event("shutdown")
 async def shutdown():

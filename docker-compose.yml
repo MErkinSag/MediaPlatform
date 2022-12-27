@@ -11,9 +11,6 @@ services:
       - ui
       - postgres
 
-    environment:
-      - FILL_DB=True
-
     depends_on:
       postgres:
         condition: service_healthy
